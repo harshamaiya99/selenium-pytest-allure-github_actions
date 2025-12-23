@@ -40,8 +40,22 @@ jobs:
       run: |
         allure generate allure-results -o allure-report --clean
 
-    - name: Upload Allure Report
-      uses: actions/upload-artifact@v4
+    - name: Deploy Allure Report to GitHub Pages
+      uses: peaceiris/actions-gh-pages@v4
       with:
-        name: allure-report
-        path: allure-report
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: allure-report
+
+    - name: Load Allure history
+      uses: actions/checkout@v4
+      with:
+        ref: gh-pages
+        path: gh-pages
+      continue-on-error: true
+
+    - name: Copy history
+      run: |
+        if [ -d gh-pages/history ]; then
+          cp -r gh-pages/history allure-results/
+        fi
+
