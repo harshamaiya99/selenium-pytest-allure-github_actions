@@ -1,35 +1,42 @@
 import csv
-import allure
 import pytest
-from selenium.webdriver.common.by import By
+import allure
+from pages.login_page import LoginPage
+from pages.form_page import FormPage
 
 BASE_URL = "http://localhost:8000"
 
+
 def load_test_data():
     with open("tests/test_data.csv") as f:
-        reader = csv.DictReader(f)
-        return list(reader)
+        return list(csv.DictReader(f))
+
 
 @allure.feature("E2E Web Testing")
 @allure.story("Login and Form Submission")
 @pytest.mark.parametrize("data", load_test_data())
 def test_login_and_form(driver, data):
 
+    login_page = LoginPage(driver)
+    form_page = FormPage(driver)
+
     with allure.step("Open login page"):
-        driver.get(f"{BASE_URL}/index.html")
+        login_page.open(BASE_URL)
 
-    with allure.step("Perform login"):
-        driver.find_element(By.ID, "username").send_keys(data["username"])
-        driver.find_element(By.ID, "password").send_keys(data["password"])
-        driver.find_element(By.ID, "loginBtn").click()
+    with allure.step("Login"):
+        login_page.login(data["username"], data["password"])
 
-    with allure.step("Fill user form"):
-        driver.find_element(By.ID, "fullname").send_keys(data["fullname"])
-        driver.find_element(By.ID, "email").send_keys(data["email"])
-        driver.find_element(By.ID, "gender").send_keys(data["gender"])
+    with allure.step("Wait for form page"):
+        form_page.wait_for_page()
+        assert "Form" in driver.title
 
-        if data["subscribe"].lower() == "true":
-            driver.find_element(By.ID, "subscribe").click()
+    with allure.step("Fill form"):
+        form_page.fill_form(
+            fullname=data["fullname"],
+            email=data["email"],
+            gender=data["gender"],
+            subscribe=data["subscribe"].lower() == "true"
+        )
 
     with allure.step("Submit form"):
-        driver.find_element(By.ID, "submitBtn").click()
+        form_page.submit()
