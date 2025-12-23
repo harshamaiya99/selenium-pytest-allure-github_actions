@@ -11,16 +11,13 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v4
+    - uses: actions/checkout@v4
 
-    - name: Setup Python
-      uses: actions/setup-python@v5
+    - uses: actions/setup-python@v5
       with:
         python-version: "3.10"
 
-    - name: Install Chrome
-      uses: browser-actions/setup-chrome@v1
+    - uses: browser-actions/setup-chrome@v1
 
     - name: Install Dependencies
       run: |
@@ -30,15 +27,18 @@ jobs:
       run: |
         pytest tests --alluredir=allure-results
 
-    # ✅ Install Allure CLI (NO Docker)
     - name: Install Allure CLI
       run: |
-        sudo apt-get update
-        sudo apt-get install -y allure
+        ALLURE_VERSION=2.27.0
+        curl -Ls https://github.com/allure-framework/allure2/releases/download/${ALLURE_VERSION}/allure-${ALLURE_VERSION}.tgz -o allure.tgz
+        tar -xzf allure.tgz
+        sudo mv allure-${ALLURE_VERSION} /opt/allure
+        sudo ln -s /opt/allure/bin/allure /usr/bin/allure
+        allure --version
 
     - name: Generate Allure Report
       run: |
-        /usr/bin/allure generate allure-results -o allure-report --clean
+        allure generate allure-results -o allure-report --clean
 
     - name: Upload Allure Report
       uses: actions/upload-artifact@v4
