@@ -1,0 +1,43 @@
+name: CI Selenium Tests
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Code
+      uses: actions/checkout@v4
+
+    - name: Setup Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: "3.10"
+
+    - name: Install Chrome
+      uses: browser-actions/setup-chrome@v1
+
+    - name: Install Dependencies
+      run: |
+        pip install -r tests/requirements.txt
+
+    - name: Run Tests with Allure
+      run: |
+        pytest tests --alluredir=allure-results
+
+    - name: Generate Allure Report
+      uses: simple-elf/allure-report-action@v1
+      with:
+        allure_results: allure-results
+        allure_report: allure-report
+
+    - name: Upload Allure Report
+      uses: actions/upload-artifact@v4
+      with:
+        name: allure-report
+        path: allure-report
