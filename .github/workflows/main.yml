@@ -49,11 +49,12 @@ jobs:
     # Install Allure CLI
     # -------------------------------
     - name: Install Allure CLI
-      run: |
-        sudo apt-get update
-        sudo apt-get install -y allure
+      uses: simple-elf/allure-cli-action@v1
+      with:
+        allure-version: 2.27.0
 
-    # -------------------------------
+
+      # -------------------------------
     # Load previous Allure history
     # -------------------------------
     - name: Load Allure history
