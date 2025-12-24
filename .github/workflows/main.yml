@@ -5,7 +5,6 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-
   schedule:
     - cron: "30 6 * * *"   # 12:00 PM IST daily
 
@@ -81,6 +80,23 @@ jobs:
         else
           echo "No previous Allure history found"
         fi
+
+    # -------------------------------
+    # Create Executor JSON (NEW STEP)
+    # -------------------------------
+    - name: Create executor.json
+      if: always()
+      run: |
+        echo '{
+          "name": "GitHub Actions",
+          "type": "github",
+          "url": "https://github.com/${{ github.repository }}",
+          "buildOrder": ${{ github.run_number }},
+          "buildName": "Run #${{ github.run_number }}",
+          "buildUrl": "https://github.com/${{ github.repository }}/actions/runs/${{ github.run_id }}",
+          "reportName": "Allure Report",
+          "reportUrl": "https://${{ github.repository_owner }}.github.io/${{ github.event.repository.name }}/"
+        }' > allure-results/executor.json
 
     # -------------------------------
     # Generate Allure report
