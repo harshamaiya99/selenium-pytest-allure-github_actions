@@ -6,7 +6,7 @@ on:
   pull_request:
     branches: [ main ]
 
-schedule:
+  schedule:
     - cron: "30 6 * * *"   # 12:00 PM IST daily
 
 jobs:
