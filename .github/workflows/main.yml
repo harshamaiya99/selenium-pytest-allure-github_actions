@@ -1,4 +1,4 @@
-name: CI Selenium Tests
+name: Selenium Pytest + Allure CI
 
 on:
   push:
@@ -6,59 +6,89 @@ on:
   pull_request:
     branches: [ main ]
 
-permissions:
-  contents: write
-
 jobs:
   test:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write   # required for gh-pages push
 
     steps:
-    - uses: actions/checkout@v4
+    # -------------------------------
+    # Checkout main branch
+    # -------------------------------
+    - name: Checkout main
+      uses: actions/checkout@v4
 
-    - uses: actions/setup-python@v5
+    # -------------------------------
+    # Setup Python
+    # -------------------------------
+    - name: Set up Python
+      uses: actions/setup-python@v5
       with:
-        python-version: "3.10"
+        python-version: '3.10'
 
-    - uses: browser-actions/setup-chrome@v1
-
-    - name: Install Dependencies
+    # -------------------------------
+    # Install dependencies
+    # -------------------------------
+    - name: Install dependencies
       run: |
+        python -m pip install --upgrade pip
         pip install -r tests/requirements.txt
 
+    # -------------------------------
+    # Run Selenium + Pytest
+    # -------------------------------
     - name: Run Tests
       run: |
-        pytest tests --alluredir=allure-results
+        pytest tests \
+          --alluredir=allure-results \
+          --disable-warnings \
+          -v
 
+    # -------------------------------
+    # Install Allure CLI
+    # -------------------------------
     - name: Install Allure CLI
       run: |
-        ALLURE_VERSION=2.27.0
-        curl -Ls https://github.com/allure-framework/allure2/releases/download/${ALLURE_VERSION}/allure-${ALLURE_VERSION}.tgz -o allure.tgz
-        tar -xzf allure.tgz
-        sudo mv allure-${ALLURE_VERSION} /opt/allure
-        sudo ln -s /opt/allure/bin/allure /usr/bin/allure
-        allure --version
+        sudo apt-get update
+        sudo apt-get install -y allure
 
-    - name: Generate Allure Report
-      run: |
-        allure generate allure-results -o allure-report --clean
-
-    - name: Deploy Allure Report to GitHub Pages
-      uses: peaceiris/actions-gh-pages@v4
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        publish_dir: allure-report
-
+    # -------------------------------
+    # Load previous Allure history
+    # -------------------------------
     - name: Load Allure history
+      if: always()
       uses: actions/checkout@v4
       with:
         ref: gh-pages
         path: gh-pages
-      continue-on-error: true
 
-    - name: Copy history
+    # -------------------------------
+    # Copy history into allure-results
+    # -------------------------------
+    - name: Copy Allure history
+      if: always()
       run: |
-        if [ -d gh-pages/history ]; then
+        if [ -d "gh-pages/history" ]; then
           cp -r gh-pages/history allure-results/
+        else
+          echo "No previous Allure history found"
         fi
 
+    # -------------------------------
+    # Generate Allure report
+    # -------------------------------
+    - name: Generate Allure Report
+      if: always()
+      run: |
+        allure generate allure-results -o allure-report --clean
+
+    # -------------------------------
+    # Deploy report to GitHub Pages
+    # -------------------------------
+    - name: Deploy Allure Report to GitHub Pages
+      if: always()
+      uses: peaceiris/actions-gh-pages@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: allure-report
