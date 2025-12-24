@@ -49,12 +49,15 @@ jobs:
     # Install Allure CLI
     # -------------------------------
     - name: Install Allure CLI
-      uses: simple-elf/allure-cli-action@v1
-      with:
-        allure-version: 2.27.0
+      run: |
+        ALLURE_VERSION=2.27.0
+        curl -Ls https://github.com/allure-framework/allure2/releases/download/${ALLURE_VERSION}/allure-${ALLURE_VERSION}.tgz -o allure.tgz
+        tar -xzf allure.tgz
+        sudo mv allure-${ALLURE_VERSION} /opt/allure
+        sudo ln -s /opt/allure/bin/allure /usr/bin/allure
+        allure --version
 
-
-      # -------------------------------
+    # -------------------------------
     # Load previous Allure history
     # -------------------------------
     - name: Load Allure history
