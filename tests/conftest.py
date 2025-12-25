@@ -13,7 +13,9 @@ BASE_URL = "http://localhost:8000"
 def start_server():
     process = subprocess.Popen(
         ["python", "-m", "http.server", "8000"],
-        cwd=os.path.join(os.getcwd(), "app")
+        cwd=os.path.join(os.getcwd(), "app"),
+        stdout = subprocess.DEVNULL,
+        stderr = subprocess.DEVNULL
     )
     time.sleep(2)
     yield
