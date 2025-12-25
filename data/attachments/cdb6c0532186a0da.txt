@@ -1,0 +1,4 @@
+127.0.0.1 - - [25/Dec/2025 04:18:25] "GET /index.html HTTP/1.1" 200 -
+127.0.0.1 - - [25/Dec/2025 04:18:25] code 404, message File not found
+127.0.0.1 - - [25/Dec/2025 04:18:25] "GET /favicon.ico HTTP/1.1" 404 -
+127.0.0.1 - - [25/Dec/2025 04:18:25] "GET /form.html?username=user13&password=pass13 HTTP/1.1" 200 -
