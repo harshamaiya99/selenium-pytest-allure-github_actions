@@ -8,10 +8,12 @@ class LoginPage(BasePage):
     LOGIN_BTN = (By.ID, "loginBtn")
 
     def open(self, base_url):
-        self.driver.get(f"{base_url}/index.html")
+        url = f"{base_url}/index.html"
+        self.log(f"Navigating to {url}")
+        self.driver.get(url)
         self.wait_for_title("Login")
 
     def login(self, username, password):
-        self.type(self.USERNAME, username)
-        self.type(self.PASSWORD, password)
-        self.click(self.LOGIN_BTN)
+        self.type(self.USERNAME, username, "Username Input")
+        self.type(self.PASSWORD, password, "Password Input")
+        self.click(self.LOGIN_BTN, "Login Button")
