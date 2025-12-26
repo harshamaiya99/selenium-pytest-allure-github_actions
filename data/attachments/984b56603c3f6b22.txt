@@ -1,0 +1,18 @@
+Navigating to http://localhost:8000/index.html
+Waiting for title to contain 'Login'
+Typing 'user1' into Username Input
+Typing '*****' into Password Input
+Clicking on Login Button
+Waiting for Form Page to load
+Waiting for Form Page to load
+Typing 'John Doe' into Full Name Input
+Typing 'john@example.com' into Email Input
+Typing '1990-01-01' into Date of Birth Picker
+JS Clicking on Experience 2-5 Years
+Selecting 'Male' from Gender Dropdown
+JS Clicking on Load Skills Button
+Waiting for Skills input to appear (Async)...
+Typing 'Python Selenium' into Skills Input
+JS Clicking on Subscribe Checkbox
+JS Clicking on Submit Button
+Accepting alert with text: 'Form Submitted Successfully'
