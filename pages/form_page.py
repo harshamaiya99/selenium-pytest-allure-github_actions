@@ -4,7 +4,6 @@ from pages.base_page import BasePage
 
 
 class FormPage(BasePage):
-    # ... (Locators remain the same) ...
     FULLNAME = (By.ID, "fullname")
     EMAIL = (By.ID, "email")
     DOB = (By.ID, "dob")
@@ -28,23 +27,27 @@ class FormPage(BasePage):
         self.select_radio_by_value("experience", experience, f"Experience {experience} Years")
         self.select_by_text(self.GENDER, gender, "Gender Dropdown")
 
-        # The Click call below now uses the robust Scroll+Click from BasePage
-        self.click(self.LOAD_SKILLS_BTN, "Load Skills Button")
+        # --- FIX IS HERE ---
+        # We MUST use js_click. Standard click is failing in Headless Linux (CI)
+        # causing the "Skills" input to never appear.
+        self.js_click(self.LOAD_SKILLS_BTN, "Load Skills Button")
 
         self.log("Waiting for Skills input to appear (Async)...")
         try:
             self.type(self.SKILL_INPUT, "Python Selenium", "Skills Input")
+            # Take a screenshot here to prove the dynamic element loaded
+            self.take_screenshot("Skills_Loaded_Success")
         except TimeoutException:
-            # If this raises, it means the click definitely didn't trigger the JS
-            # even after our robust retry, or the network/JS is truly broken.
+            # If it fails, take a screenshot of the state at that exact moment
+            self.take_screenshot("Skills_Load_Failed")
             raise TimeoutException(
                 "Skills input did not appear after clicking 'Load Skills'. Check network delay or JS.")
 
         if subscribe:
             checkbox = self.find(self.SUBSCRIBE)
             if not checkbox.is_selected():
-                self.click(self.SUBSCRIBE, "Subscribe Checkbox")
+                self.js_click(self.SUBSCRIBE, "Subscribe Checkbox")
 
     def submit(self):
-        self.click(self.SUBMIT, "Submit Button")
+        self.js_click(self.SUBMIT, "Submit Button")
         self.handle_alert_if_present()
