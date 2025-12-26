@@ -2,6 +2,18 @@
 <html>
 <head>
     <title>Form Page</title>
+    <style>
+        .hidden { display: none; }
+        .visible { display: block; margin-top: 10px; color: green; }
+    </style>
+    <script>
+        function showSkills() {
+            // Simulating a network delay of 2 seconds
+            setTimeout(function() {
+                document.getElementById('skills-container').className = 'visible';
+            }, 2000);
+        }
+    </script>
 </head>
 <body>
 
@@ -14,16 +26,33 @@
     <label>Email:</label>
     <input type="email" id="email"><br><br>
 
+    <label>Date of Birth:</label>
+    <input type="date" id="dob"><br><br>
+
+    <label>Years of Experience:</label><br>
+    <input type="radio" name="experience" value="0-1"> 0-1 Years
+    <input type="radio" name="experience" value="2-5"> 2-5 Years
+    <input type="radio" name="experience" value="5+"> 5+ Years
+    <br><br>
+
     <label>Gender:</label>
     <select id="gender">
         <option value="Male">Male</option>
         <option value="Female">Female</option>
+        <option value="Other">Other</option>
     </select><br><br>
+
+    <button type="button" id="loadSkillsBtn" onclick="showSkills()">Load Skills (Async)</button>
+    <div id="skills-container" class="hidden">
+        <label>Primary Skill:</label>
+        <input type="text" id="skill_name" value="">
+    </div>
+    <br><br>
 
     <label>Subscribe:</label>
     <input type="checkbox" id="subscribe"><br><br>
 
-    <button id="submitBtn" type="button" onclick="alert('Form Submitted')">
+    <button id="submitBtn" type="button" onclick="alert('Form Submitted Successfully')">
         Submit
     </button>
 </form>

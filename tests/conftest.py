@@ -6,8 +6,10 @@ import allure
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 
-BASE_URL = "http://localhost:8000"
-
+# Plan 2: Centralized Configuration
+@pytest.fixture(scope="session")
+def base_url():
+    return "http://localhost:8000"
 
 @pytest.fixture(scope="session", autouse=True)
 def start_server():
@@ -17,10 +19,9 @@ def start_server():
         stdout = subprocess.DEVNULL,
         stderr = subprocess.DEVNULL
     )
-    time.sleep(2)
+    time.sleep(2) # Kept original logic as requested
     yield
     process.terminate()
-
 
 @pytest.fixture
 def driver():
@@ -35,7 +36,6 @@ def driver():
     driver.maximize_window()
     yield driver
     driver.quit()
-
 
 @pytest.hookimpl(hookwrapper=True)
 def pytest_runtest_makereport(item, call):
