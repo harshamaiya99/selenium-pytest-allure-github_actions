@@ -15,4 +15,3 @@ Waiting for Skills input to appear (Async)...
 Typing 'Python Selenium' into Skills Input
 JS Clicking on Subscribe Checkbox
 JS Clicking on Submit Button
-Accepting alert with text: 'Form Submitted Successfully'
