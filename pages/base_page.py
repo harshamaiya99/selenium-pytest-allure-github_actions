@@ -11,7 +11,7 @@ class BasePage:
         self.timeout = timeout
         self.wait = WebDriverWait(driver, timeout)
 
-    def log(self, message, screenshot=False):
+    def log(self, message, screenshot=True):
         """Logs a message to Allure and optionally takes a screenshot."""
         with allure.step(message):
             print(message)
