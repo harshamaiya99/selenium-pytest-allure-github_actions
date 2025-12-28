@@ -1,58 +1,58 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>Form Page</title>
+<!DOCTYPE html> <!-- HTML5 document type -->
+<html> <!-- Root element -->
+<head> <!-- Metadata and scripts/styles -->
+    <title>Form Page</title> <!-- Title shown in browser tab -->
     <style>
-        .hidden { display: none; }
-        .visible { display: block; margin-top: 10px; color: green; }
+        .hidden { display: none; } <!-- Hidden class hides elements -->
+        .visible { display: block; margin-top: 10px; color: green; } <!-- Visible class shows elements with styling -->
     </style>
     <script>
-        function showSkills() {
+        function showSkills() { <!-- Function to reveal the skills container after a delay -->
             // Simulating a network delay of 2 seconds
             setTimeout(function() {
-                document.getElementById('skills-container').className = 'visible';
+                document.getElementById('skills-container').className = 'visible'; <!-- Switch class to show the container -->
             }, 2000);
         }
     </script>
 </head>
-<body>
+<body> <!-- Visible page content -->
 
-<h2>User Form</h2>
+<h2>User Form</h2> <!-- Heading for the form -->
 
-<form>
-    <label>Full Name:</label>
-    <input type="text" id="fullname"><br><br>
+<form> <!-- Form wrapper (no action since JS/test triggers submission) -->
+    <label>Full Name:</label> <!-- Label for fullname -->
+    <input type="text" id="fullname"><br><br> <!-- Fullname input -->
 
-    <label>Email:</label>
-    <input type="email" id="email"><br><br>
+    <label>Email:</label> <!-- Label for email -->
+    <input type="email" id="email"><br><br> <!-- Email input -->
 
-    <label>Date of Birth:</label>
-    <input type="date" id="dob"><br><br>
+    <label>Date of Birth:</label> <!-- Label for DOB -->
+    <input type="date" id="dob"><br><br> <!-- DOB input -->
 
-    <label>Years of Experience:</label><br>
-    <input type="radio" name="experience" value="0-1"> 0-1 Years
-    <input type="radio" name="experience" value="2-5"> 2-5 Years
-    <input type="radio" name="experience" value="5+"> 5+ Years
+    <label>Years of Experience:</label><br> <!-- Label for experience radios -->
+    <input type="radio" name="experience" value="0-1"> 0-1 Years <!-- Radio for 0-1 years -->
+    <input type="radio" name="experience" value="2-5"> 2-5 Years <!-- Radio for 2-5 years -->
+    <input type="radio" name="experience" value="5+"> 5+ Years <!-- Radio for 5+ years -->
     <br><br>
 
-    <label>Gender:</label>
-    <select id="gender">
-        <option value="Male">Male</option>
-        <option value="Female">Female</option>
-        <option value="Other">Other</option>
+    <label>Gender:</label> <!-- Label for gender select -->
+    <select id="gender"> <!-- Gender dropdown -->
+        <option value="Male">Male</option> <!-- Male option -->
+        <option value="Female">Female</option> <!-- Female option -->
+        <option value="Other">Other</option> <!-- Other option -->
     </select><br><br>
 
-    <button type="button" id="loadSkillsBtn" onclick="showSkills()">Load Skills (Async)</button>
-    <div id="skills-container" class="hidden">
-        <label>Primary Skill:</label>
-        <input type="text" id="skill_name" value="">
+    <button type="button" id="loadSkillsBtn" onclick="showSkills()">Load Skills (Async)</button> <!-- Button to load skills asynchronously -->
+    <div id="skills-container" class="hidden"> <!-- Container that is shown after clicking load -->
+        <label>Primary Skill:</label> <!-- Label for primary skill -->
+        <input type="text" id="skill_name" value=""> <!-- Skill name input -->
     </div>
     <br><br>
 
-    <label>Subscribe:</label>
-    <input type="checkbox" id="subscribe"><br><br>
+    <label>Subscribe:</label> <!-- Label for subscribe checkbox -->
+    <input type="checkbox" id="subscribe"><br><br> <!-- Subscribe checkbox -->
 
-    <button id="submitBtn" type="button" onclick="alert('Form Submitted Successfully')">
+    <button id="submitBtn" type="button" onclick="alert('Form Submitted Successfully')"> <!-- Submit button triggers alert -->
         Submit
     </button>
 </form>
