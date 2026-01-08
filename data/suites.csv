@@ -1,4 +1,4 @@
 "Status","Start Time","Stop Time","Duration in ms","Parent Suite","Suite","Sub Suite","Test Class","Test Method","Name","Description"
-"passed","Wed Jan 07 18:56:49 UTC 2026","Wed Jan 07 18:56:55 UTC 2026","5779","tests","test_suite","","","","test_login_and_form[data2]",""
-"passed","Wed Jan 07 18:56:39 UTC 2026","Wed Jan 07 18:56:43 UTC 2026","3286","tests","test_suite","","","","test_login_and_form[data0]",""
-"passed","Wed Jan 07 18:56:43 UTC 2026","Wed Jan 07 18:56:49 UTC 2026","6255","tests","test_suite","","","","test_login_and_form[data1]",""
+"passed","Thu Jan 08 18:53:50 UTC 2026","Thu Jan 08 18:53:52 UTC 2026","2794","tests","test_suite","","","","test_login_and_form[data0]",""
+"passed","Thu Jan 08 18:53:59 UTC 2026","Thu Jan 08 18:54:05 UTC 2026","5757","tests","test_suite","","","","test_login_and_form[data2]",""
+"passed","Thu Jan 08 18:53:53 UTC 2026","Thu Jan 08 18:53:59 UTC 2026","6232","tests","test_suite","","","","test_login_and_form[data1]",""
